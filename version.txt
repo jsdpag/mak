@@ -1,0 +1,201 @@
+
+MAK version history
+
+00.00.XX - Development phase
+00.01.XX - Core pre-processing functions are written
+00.02.XX - Core data analysis functions are written
+
+02/01/2018, 00.00.00 - Wrote first versions of makprep
+12/02/2018, 00.01.00 - Core pre-processing library written
+13/02/2018, 00.01.01 - makreactime fixed to search for end of saccade
+  backwards from final mtarget MET signal
+13/02/2018, 00.01.02 - makmergetool bmerge_cb, breject_cb, and bdone_cb
+  tweaked so that graphics objects deleted after de-selection
+13/02/2018, 00.01.03 - Added reset buttons to makmergetool. Spike cluster
+  assignments can be reset either to those following automated merging, or
+  those following initial clustering but prior to automated merging.
+13/02/2018, 00.01.04 - makmancmerge and makmergetool altered to allow new
+  connection strength cutoff values to be set and used
+14/02/2018, 00.01.05 - makmancmerge removes write permissions from output
+  file.
+14/02/2018, 00.01.06 - makmergetool allows toggling of 2D PCA density
+  histogram normalisation , and bin edges are properly updated following
+  cluster mergers. Auto button chooses best match if a cluster is already
+  selected.
+15/02/2018, 00.01.07 - makmergetool now has 6 panels. The top row show all
+  clusters' average waveforms +/- st.dev., 3D PCA space, 2D PCA density
+  histograms. The bottom row shows avg. waves +/- st.dev., inter-spike-
+  interval distributions, and 2D PCA density histograms for only the
+  selected clusters.
+16/02/2018, 00.01.08 - makload and maksave written
+18/02/2018, 00.01.09 - makfun written
+19/02/2018, 00.01.10 - makfun fixed to return output as described in help.
+  Added makfname.
+20/02/2018, 00.01.11 - makprep fixed to save electrode id to channel and
+  probe mappings. Added makspk.
+21/02/2018, 00.01.12 - makload has '-groupspikes' option flag that saves
+  makspk output to d.spike , replacing original content.
+01/03/2018, 00.01.13 - makrpcorr and makrccg added. The latter is untested.
+06/03/2018, 00.01.14 - maksttc added. Largly untested.
+09/03/2018, 00.01.15 - maksttc_cutts added. maksttc partially validated.
+14/03/2018, 00.01.16 - Corrected indexing error inside makrccg ; adapts
+  how P and X are computed based on output requests , will use low-memory
+  method if they are not.  maksttc handles case of no spikes in window in
+  getspks , and does not overrun A or B in while loops for leading spikes;
+  now returns or accepts Tab, Fi, and N arguments for pre-computation and
+  reducing overall memory use ; overhaul of STTC computation to further
+  reduce memory burden.
+01/04/2018, 00.01.17 - Changes to makprep. Introduced parameters
+  .elect.keep and .spksort.skip to control whether electrode rejection or
+  automated spike sorting are performed. Instead of throwing an error,
+  trials will be rejected if the analysis epoch is not present.
+  hitcompatible now deals with the empty matrices that are returned when
+  one stimulus dynamically changes hit regions during a trial and the rest
+  do not.
+04/04/2018, 00.01.18 - Added makrastplot for visualising spike rasters.
+06/04/2018, 00.01.19 - Added makgabor. Fixed problem in makprep where
+  n2pclim not set during alignment by MET signals.
+11/04/2018, 00.01.20 - makwavg added to compute weighted averages. makddi
+  added to compute disparity discrimination index.
+16/04/2018, 00.01.21 - Fixed makddi to check that the number of trials
+  exceeds the number of disparity levels, and ignores NaN values. Fixed
+  makwavg, which calculated weighted average the wrong way. makmedstd
+  computes median and standard deviation around the median.
+22/04/2018, 00.01.22 - Added makroc that computes ROC curves and associated
+  statistics for a set of spike clusters or a set of time bins.
+23/04/2018, 00.01.23 - Fixed error with makroc when handling repeat values.
+  makroc now handles N-dimensional data sets. makbalancedz added to convert
+  data into balanced z-scores.
+24/04/2018, 00.01.24 - Fixed minor conceptual errors in makbalancedz and
+  debugged multidimensional data handling.
+25/04/2018, 00.01.25 - makrccg can now return shift-corrected cross-
+  correlations.
+26/04/2018, 00.01.26 - maknsp2ptb now handles the case when the Cerebus
+  saves more than one mstart/mstop signal to its digin records.
+  makreclasstrial no longer launches an error when an end state is not
+  found, it simply rejects the trial.
+04/05/2018, 00.01.27 - maksave handles d( i ).header struct array with more
+  than one element. makreactime uses alternative estimate of velocity and
+  acceleration thresholds if the lognormal ones are crazy.
+07/05/2018, 00.01.28 - makprep now checks that Cerebus files actually exist
+  before opening them. makreactime no longer looks for the end of the
+  saccade past the end of eye.time.
+09/05/2018, 00.01.29 - makrccg now returns the cross-correlogram that is
+  normalised by a triangular function and the geometric mean firing rate
+  of the neurone pair (see Bair et al 2001 , Methods , Equation 6).
+11/05/2018, 00.01.30 - makimat added , it returns logical index matrix for
+  accessing specific spike cluster pairs.
+16/05/2018, 00.01.31 - makreclasstrial uses incorrect column indeces to
+  access eye position data saved by MET.
+21/05/2018, 00.01.32 - makcell2mat added to enable concatenation of nested
+  cell arrays. makfun now uses makcell2mat to allow functions to return
+  cell arrays. makpak added to return specific output arguments of a
+  function in a single cell array.
+23/05/2018, 00.01.33 - makmi added to compute empirical mutual information.
+05/06/2018, 00.01.34 - makprep reaction parameters .lognvel and .lognacc
+  can now be set to -1 to force the use of fixed default parameters. New
+  makprep parameter .rt.verifythr added to control verification of measured
+  velocity and acceleration thresholds. makreactime will now use the
+  .rt.stim parameter to refine which eye samples are used to measure
+  velocity and acceleration thresholds ; that is , it will try to ignore
+  samples that have left the fixation target when estimating velocity and
+  acceleration thresholds. makreactime properly sets irefstim when no
+  fixation target is available.
+11/06/2018, 00.01.35 - Adds makskiptime for calculating start time, end
+  time, and duration of skipped frames.
+13/06/2018, 00.01.36 - makbalancedz now replaces balanced standard devs
+  equal to zero with values of 1. This happens for columns of x that are
+  all zeros. The remedy allows the return of a column of zeros as balanced
+  z-scores.
+22/07/2018, 00.01.37 - makcrosstalk added to measure shared signal between
+  pairs of electrodes. High proportions of synchronous spikes with similar
+  waveform shapes will be detected if there is, for instance, a flaw with
+  the probe or software.
+26/07/2018, 00.01.38 - Indexing error in makrccg where lower-triangular
+  part of rccg below the diagonal is not properly transposed to the upper-
+  triangular part above the diagonal.
+29/08/2018, 00.01.39 - makrccg no longer returns 1's for the r_ccg auto-
+  correlations. Rather, the shift-corrected auto-correlation is returned at
+  each integration lag. This way, the cross-correlated r_ccg values can be
+  turned back into something analogous to the covariance with units of
+  spikes-per-millisecond squared. This is useful for computing the bias-
+  corrected linear Fisher information at different integration lags. Added
+  maklinfin, which implements the bias-corrected linear Fisher information
+  equations from Kanitscheider et al. (2015), essentially wrapping their
+  BCFisher, BCFisherCross, BCFisherDiag, and BCFisherShuf into a single
+  function. Unlike their functions, maklinfin expects the tuning curves and
+  covariance matrices to be computed and then handed in. This adds much
+  more flexibility when handling large and complex data sets, or analyses.
+30/08/2018, 00.01.40 - maklinfin tweaked to require shuffled covariance
+  matrix for 'diag' sub-function, this returns results with an identical
+  distribution to Kanitscheider et al.'s BCFisherDiag function.
+31/10/2018, 00.01.41 - makroc had an indexing error when calculating
+  Youden's J statistic for special cases where that statistic defaults to
+  -Inf.
+20/11/2018, 00.01.42 - makmergetool updated to zero pad missing rows in
+  PCA array, guarantees that three-dimensional plots won't crash.
+22/11/2018, 00.01.43 - makbindvar added to return the mean and error of one
+  variable that is binned according to the values of another variable.
+25/11/2018, 00.01.44 - makmi tweaked for about 15% reduction in run time.
+30/01/2019, 00.01.45 - makevtim added to return event times on each trial.
+19/03/2019, 00.01.46 - makpspkern added for PSP-shaped convolution kernel.
+12/04/2019, 00.01.47 - Ugly hack fixes to makprep.m and maknsp2ptb.m to
+  get around problems of using Serial I/O start and stop recording signals
+  between MET and the Cerebus. makprep ignores Serial I/O and maknsp2ptb
+  requires new parameters .useheader and .relaxedmatch.
+01/07/2019, 00.01.48 - Added makkeepspk.m to reject spikes thought to
+  result from cross-talk between electrodes.
+30/08/2019, 00.01.49 - Added makxcorr to compute simple cross-correlations
+  with potentially better run times than Matlab's xcorr.
+04/09/2019, 00.01.50 - Added makconv for FFT based convolution of a set of
+  signals.
+04/09/2019, 00.01.51 - Added makgaborfit to find best fitting Gabors for a
+  set of tuning curves.
+05/09/2019, 00.01.52 - Added makaxeq for setting axes square, tight, and
+  matching axis limits.
+01/10/2019, 00.01.53 - makgaborfit can now fit correlated and anti-
+  correlated disparity tuning curves in the same optimisation, returning
+  separate amp and phase parameters for each.
+13/01/2020, 00.01.54 - Added makrepair with sub-functions fork, nspcheck,
+  and nspincr. makreclasstrial returns minlatflg to say whether the break
+  has reached some minimum latency following onset of a reference state.
+  makprep param broken.minlatency reduced to 0.15. Added param broken.
+  minlatkeep to enable retention of broken trials that satisfy latency
+  criterion. Added makcf, short form of cellfun(...,'UniformOutput',false).
+  Upgraded makcrosstalk so that it can compute crosstalk measures between
+  all spike clusters or between electrodes (ignoring rejected spike
+  clusters).
+14/01/2020, 00.01.55 - Added maktiedrank to compute tied rank for each
+  column of an input matrix, unlike tiedrank which only accepts vectors as
+  input.
+09/04/2020, 00.01.56 - A rare but possible event is that a frame skip
+  occurs on the final frame of a trial. This results in a missmatch in the
+  number of frames recorded by PTB and the number of frames detected by the
+  photodiode. maknsp2ptb.m is adjusted (from line 431 of v00.01.55) so that
+  the number of frames is the minimum of the two records. Adds new
+  parameter to makprep, p.spksort.noise_thr_auv to discard high-amplitude
+  noise spikes prior to spike sorting. It then checks the waveforms after
+  aligning to peaks for any spline interpolations that blew up, using the
+  same threshold, and zeros any of them.
+21/04/2020, 00.01.57 - Added makrfgauss for user-guided least-squares
+  Guassian fitting to RF mapping data.
+05/05/2020, 00.01.58 - Added makprep parameter par.rt.halfmax, logical flag
+  that tells makreactime to search for the maximum velocity and
+  acceleration in the time prior to the final mtarg signal, as indicated by
+  par.rt.verifythr. Half the maximum value is used as the threshold.
+  par.rt.halfmax is now true by default.
+26/05/2020, 00.01.59 - Tweak to makgaborfit adding an optional parameter
+  struct as the final argument. This is to allow better customisation of
+  the fitting procedure by changing upper and lower bounds of the parameter
+  search. For now, this will allow changes to the range of horizontal
+  offsets, Gaussian widths and amplitudes, and the range of cosinusoidal
+  frequencies; the framework allows further additions later. Better check
+  on input args x, Y, and Ya. Returns lower, upper bounds on param search
+  as well as starting params.
+02/07/2020, 00.01.60 - Added makrccg2, optimised for speed. Get it? Mach 2?
+  eh...
+08/07/2020, 00.01.61 - Added MAK.DataAnalysisTutorial_v1.0.pages & *.pdf
+  documents to help guide users in using MAK for general data analysis.
+18/12/2020, 00.01.62 - Added makjennrich.m implementing the Jennrich Test
+  for equality between two correlation matrices.
+
