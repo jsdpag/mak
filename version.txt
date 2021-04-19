@@ -3,7 +3,9 @@ MAK version history
 
 00.00.XX - Development phase
 00.01.XX - Core pre-processing functions are written
-00.02.XX - Core data analysis functions are written
+00.02.XX - Departing from MET support, becomes general purpose toolbox for
+           neuroscientists. GitLab project:
+             http://git.esi.local/smithj/mak.git
 
 02/01/2018, 00.00.00 - Wrote first versions of makprep
 12/02/2018, 00.01.00 - Core pre-processing library written
@@ -198,4 +200,6 @@ MAK version history
   documents to help guide users in using MAK for general data analysis.
 18/12/2020, 00.01.62 - Added makjennrich.m implementing the Jennrich Test
   for equality between two correlation matrices.
+19/04/2021, 00.02.00 - Forking MAK into ESI GitLab project. Removed MET
+  specific functions.
 
