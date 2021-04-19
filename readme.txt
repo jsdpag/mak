@@ -96,9 +96,6 @@ makconv - FFT based convolution providing an interface that's more
 
 makddi - Computed disparity discrimination index.
 
-makfname - Return analysis data file name built for a data set returned by
-  makload.
-
 makfun - This is a powerful high-level function along the lines of cellfun.
   It can apply a set of functions to a data set that is grouped according
   to a set of variables. It can be used in combination with functions like
@@ -171,12 +168,21 @@ makxcorr - Simple re-implementation of Matlab's xcorr. Uses increased
 
 Plotting functions:
 
+makax - Return a new axes object with default formatting suitable for
+  creating figures for publication.
+
 makaxeq - Make axes objects square and tight around the data, then match
   the x- and y-axis limits.
+
+makfig - Creates a figure with size equal to a piece of A4 paper, or a
+  scaled multiple thereof.
 
 makrastplot - Creates a raster plot with trials along the y-axis and tick
   marks along the x-axis. Useful for visual inspection of single spike
   clusters.
+
+NOTE: To guarantee that MATLAB saves a figure as a vector graphics colour
+  PDF, use variations of print( '-dpdf' , '-painters' , 'output.pdf' )
 
 
 Created by Jackson Smith  -  January 2018  -  DPAG , University of Oxford

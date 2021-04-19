@@ -201,5 +201,5 @@ MAK version history
 18/12/2020, 00.01.62 - Added makjennrich.m implementing the Jennrich Test
   for equality between two correlation matrices.
 19/04/2021, 00.02.00 - Forking MAK into ESI GitLab project. Removed MET
-  specific functions.
+  specific functions. Added makax.
 
