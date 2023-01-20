@@ -97,6 +97,9 @@ if  mul < 0
   % Reverse orientation of figure from portrait to landscape
   A4 = flip( A4 ) ;
   
+  % Set printing property accordingly
+  orient( fig , 'landscape' )
+  
   % Take absolute value of multiplier
   mul = - mul ;
   
