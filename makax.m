@@ -87,7 +87,7 @@ if  nargin  &&  isgraphics( varargin{ 1 } , 'axes' )
   ax = varargin{ 1 } ;
   
   % Apply user input arguments
-  if  nargin > 1 , set( ax , varargin{ 2 : end } ) ; end
+  set( ax , varargin{ 2 : end } )
   
 % Axes not provided
 else
@@ -121,13 +121,13 @@ end % input args
 %%% Apply default parameters %%%
 
 % Apply default axes parameters
-set( ax , DEFPAR{ : } ) ;
+set( ax , DEFPAR{ : } )
 
 % Axis labels
 for  I = { 'Title' , 'XLabel' , 'YLabel' , 'ZLabel' } , i = I{ 1 } ;
   
   % Apply default label parameters
-  set( ax.( i ) , AXIPAR{ : } ) ;
+  set( ax.( i ) , AXIPAR{ : } )
   
 end % labels
 
