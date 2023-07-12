@@ -96,17 +96,12 @@ function  [ C , r2 , lb , ub , c0 ] = makgaborfit(  x  ,  Y  ,  varargin  )
 %     2.
 %   
 %   pars.percent_max_freq - 2-element vector. These are percentage values.
-%     The dominant frequency of the data in Y is found and used as the
-%     starting value for coefficient f, the cosine frequency. The lower and
-%     upper bounds of frequency in the paremeter will be
-%     f - f * pars.percent_max_freq( 1 ) and 
-%     f + f * pars.percent_max_freq( 2 ). Valid range of values is 0 and
-%     greater. Default [ 10% , 10% ].
-%   
-%   pars.transform - Char row vector i.e. a classic string. Names
-%     transformation that is applied both to Y (and Ya) and the analytic
-%     Gabor function. Valid strings are 'none' (default) for no
-%     transformation, 'sqrt' for square root.
+%     The dominant 
+%     frequency of the data in Y is found and used as the starting value
+%     for coefficient f, the cosine frequency. The lower and upper bounds
+%     of frequency in the paremeter will be f - f *
+%     pars.percent_max_freq( 1 ) and f + f * pars.percent_max_freq( 2 ).
+%     Valid range of values is 0 and greater. Default [ 10% , 10% ].
 % 
 % See also: makgabor
 % 
@@ -200,8 +195,7 @@ function  [ C , r2 , lb , ub , c0 ] = makgaborfit(  x  ,  Y  ,  varargin  )
         'makgaborfit: pars must be a scalar struct'  )
       
     elseif  ~ all(  isfield( pars , { 'xlimits_mult' , ...
-        'width_mult' , 'amplitude_mult' , 'percent_max_freq' , ...
-          'transform' } )  )
+        'width_mult' , 'amplitude_mult' , 'percent_max_freq' } )  )
       
       error (  'MAK:makgaborfit:pars_missing' ,  ...
         'makgaborfit: struct pars is missing fields'  )
@@ -252,23 +246,6 @@ function  [ C , r2 , lb , ub , c0 ] = makgaborfit(  x  ,  Y  ,  varargin  )
        'makgaborfit: percent_max_freq are not a valid percentage scores'  )
     
   end % percent_max_freq
-
-  % Check named transformation
-  if  ~ ischar( pars.transform ) || ~ isrow( pars.transform )  ||  ...
-      ~ ismember( pars.transform , { 'none' , 'sqrt' } )
-
-    error (  'MAK:makgaborfit:transform' ,  ...
-       'makgaborfit: transform is not a valid string'  )
-
-  end % transform
-
-  % Transform input if required
-  switch  pars.transform
-    case  'none'
-    case  'sqrt' , Y = sqrt( Y ) ;  if auxflg , Ya = sqrt( Ya ) ; end
-    otherwise , error( 'MAK:makgaborfit:transform_logical' ,  ...
-       'makgaborfit: Programming error transforming input.' )
-  end
   
   
   %%% Constants %%%
@@ -436,12 +413,6 @@ function  [ C , r2 , lb , ub , c0 ] = makgaborfit(  x  ,  Y  ,  varargin  )
     fg = @makgabor ;
     
   end % Ya
-
-  % Apply transform to analytic function
-  switch  pars.transform
-    case  'none'
-    case  'sqrt' , fg = @( c , x ) sqrt( fg( c , x ) ) ;
-  end
   
   % r2 wanted, allocate space for evaluating fitted gabors
   if  r2flg  ,  Yhat = zeros ( nx , Nd , 1 + auxflg ) ;  end
@@ -521,9 +492,6 @@ function  pars = defpar
   
   % ±percentage of starting frequency for cosine. Default 10%.
   pars.percent_max_freq = [ 10 , 10 ] ;
-
-  % Name transformation to apply to input data and the analytic function.
-  pars.transform = 'none' ;
   
 end % defpar
 
